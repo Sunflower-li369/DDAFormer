@@ -90,21 +90,7 @@ def test_single_volume(image, label, net, classes, patch_size=[256, 256], test_s
 
             if out_dir != '': # gai 增，，，保存分割结果
 
-                # 配色相关   # gai 增
-                alpha = 1.0
-                # RGB
-                # color_mask = [
-                #     np.array([0, 0, 0]),  # 背景 (Background)
-                #     np.array([30, 144, 255]),  # 主动脉 (aorta)  blue
-                #     np.array([0, 255, 0]),  # 胆囊 (gallbladder)  green
-                #     np.array([255, 0, 0]),  # 左肾 (left kidney)  red
-                #     np.array([0, 255, 255]),  # 右肾 (right kidney)  cyan
-                #     np.array([255, 0, 255]),  # 肝脏 (liver)   pink
-                #     np.array([255, 255, 0]),  # 胰腺 (pancreas)  yellow
-                #     np.array([128, 0, 255]),  # 脾脏 (spleen)    purple
-                #     np.array([200, 200, 200])  # 胃 (stomach)    light gray
-                # ]
-
+                
                 # BGR
                 color_mask = [
                     np.array([0, 0, 0]),  # 背景 (Background)
@@ -117,17 +103,6 @@ def test_single_volume(image, label, net, classes, patch_size=[256, 256], test_s
                     np.array([255, 204, 51]),  # 脾脏 (spleen)    蓝
                     np.array([234, 234, 234])  # 胃 (stomach)    light gray
                 ]
-                # color_mask = [
-                #     np.array([0, 0, 0]),  # 背景 (Background)
-                #     np.array([255, 204, 51]),  # 脾脏 (spleen)    蓝
-                #     np.array([255, 255, 0]),  # 右肾 (right kidney)  cyan （B: 255, G: 255）
-                #     np.array([0, 0, 255]),  # 左肾 (left kidney)  red （R: 255）
-                #     np.array([0, 255, 0]),  # 胆囊 (gallbladder)  green （G: 255）
-                #     np.array([255, 0, 255]),  # 肝脏 (liver)   pink （B: 255, R: 255）
-                #     np.array([234, 234, 234]),  # 胃 (stomach)    light gray
-                #     np.array([255, 0, 0]),  # 主动脉 (aorta)  blue （B: 255, G: 144, R: 30）
-                #     np.array([0, 255, 255]),  # 胰腺 (pancreas)  yellow （G: 255, R: 255）
-                # ]
 
                 seg_img = image[ind, :, :] * 255
                 seg_img = cv2.cvtColor(seg_img, cv2.COLOR_GRAY2BGR)
