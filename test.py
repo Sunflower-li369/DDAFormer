@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from datasets.dataset_synapse import Synapse_dataset
-from networks.DAEFormer_WithDIFF_35_FFN import DAEFormer
+from networks.DDAFormer import DDAFormer
 from trainer import trainer_synapse
 from utils0 import test_single_volume
 
@@ -22,21 +22,20 @@ parser.add_argument(
     type=str,
     default="/images/PublicDataset/Transunet_synaps/project_TransUNet/data/Synapse/",
     help="root dir for validation volume data",
-)  # for acdc volume_path=root_dir
+)  
 parser.add_argument("--dataset", type=str, default="Synapse", help="experiment_name")
 parser.add_argument("--num_classes", type=int, default=9, help="output channel of network")
 parser.add_argument("--list_dir", type=str, default="./lists/lists_Synapse", help="list dir")
 parser.add_argument("--output_dir", type=str, default="./model_out", help="output dir")
-parser.add_argument("--max_iterations", type=int, default=30000, help="maximum epoch number to train")
-parser.add_argument("--max_epochs", type=int, default=400, help="maximum epoch number to train")
-parser.add_argument("--batch_size", type=int, default=24, help="batch_size per gpu")
+parser.add_argument("--max_iterations", type=int, default=90000, help="maximum epoch number to train")
+parser.add_argument("--max_epochs", type=int, default=440, help="maximum epoch number to train")
+parser.add_argument("--batch_size", type=int, default=20, help="batch_size per gpu")
 parser.add_argument("--img_size", type=int, default=224, help="input patch size of network input")
 parser.add_argument("--is_savenii", action="store_true", help="whether to save results during inference")
 parser.add_argument("--test_save_dir", type=str, default="../predictions", help="saving prediction as nii!")
 parser.add_argument("--deterministic", type=int, default=1, help="whether use deterministic training")
 parser.add_argument("--base_lr", type=float, default=0.05, help="segmentation network learning rate")
 parser.add_argument("--seed", type=int, default=1234, help="random seed")
-# parser.add_argument('--cfg', type=str, required=True, metavar="FILE", help='path to config file', )
 parser.add_argument(
     "--opts",
     help="Modify config options by adding 'KEY VALUE' pairs. ",
@@ -132,7 +131,7 @@ if __name__ == "__main__":
     args.z_spacing = dataset_config[dataset_name]["z_spacing"]
     args.is_pretrain = True
 
-    net = DAEFormer(num_classes=args.num_classes).cuda(0)
+    net = DDAFormer(num_classes=args.num_classes).cuda(0)
 
     snapshot = os.path.join(args.output_dir, "best_model.pth")
     if not os.path.exists(snapshot):
