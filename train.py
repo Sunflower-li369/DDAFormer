@@ -70,7 +70,7 @@ parser.add_argument("--tag", help="tag of experiment")
 parser.add_argument("--eval", action="store_true", help="Perform evaluation only")
 parser.add_argument("--throughput", action="store_true", help="Test throughput only")
 parser.add_argument(
-    "--module", default="networks.DDAFormer.DDAFormer",help="The module that you want to load as the network, e.g. networks.DAEFormer.DAEFormer"
+    "--module", default="networks.DDAFormer.DDAFormer",help="The module that you want to load as the network, e.g. networks.DDAFormer.DDAFormer"
 )  
 
 args = parser.parse_args()
