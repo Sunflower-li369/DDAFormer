@@ -20,25 +20,23 @@ parser.add_argument(
     "--root_path",
     type=str,
     default="./data/Synapse/train_npz",
-    # default="/ljx/data3/DAEFormer/data/Synapse/train_npz",   # gai 路径
     help="root dir for train data",
 )
 parser.add_argument(
     "--test_path",
     type=str,
     default="./data/Synapse/test_vol_h5",
-    # default="/ljx/data3/DAEFormer/data/Synapse/test_vol_h5",   # gai 路径
     help="root dir for test data",
 )
 parser.add_argument("--dataset", type=str, default="Synapse", help="experiment_name")
 parser.add_argument("--list_dir", type=str, default="./lists/lists_Synapse", help="list dir")
 parser.add_argument("--num_classes", type=int, default=9, help="output channel of network")
 parser.add_argument("--output_dir", type=str, default="./model_out", help="output dir")
-parser.add_argument("--max_iterations", type=int, default=90000, help="maximum epoch number to train")  # gai 2.3 90000→190000
+parser.add_argument("--max_iterations", type=int, default=90000, help="maximum epoch number to train")  
 parser.add_argument("--max_epochs", type=int, default=440, help="maximum epoch number to train")
 parser.add_argument("--batch_size", type=int, default=20, help="batch_size per gpu")
 parser.add_argument("--num_workers", type=int, default=4, help="num_workers")
-parser.add_argument("--eval_interval", type=int, default=20, help="eval_interval")    # 模型训练时每隔多少个epoch对验证集进行一次评估
+parser.add_argument("--eval_interval", type=int, default=20, help="eval_interval")
 parser.add_argument("--model_name", type=str, default="synapse", help="model_name")
 parser.add_argument("--n_gpu", type=int, default=2, help="total gpu")
 parser.add_argument("--deterministic", type=int, default=1, help="whether to use deterministic training")
@@ -72,13 +70,8 @@ parser.add_argument("--tag", help="tag of experiment")
 parser.add_argument("--eval", action="store_true", help="Perform evaluation only")
 parser.add_argument("--throughput", action="store_true", help="Test throughput only")
 parser.add_argument(
-    "--module", default="networks.DAEFormer_Sparse_decoder_FFN.DAEFormer",help="The module that you want to load as the network, e.g. networks.DAEFormer.DAEFormer"
-)   # gai 12.23 module default
-
-# parser.add_argument(
-#     "--module", default="networks.DAEFormer_dual_decoder_SGFN.DAEFormer",help="The module that you want to load as the network, e.g. networks.DAEFormer.DAEFormer"
-# )   # gai 12.23 module default
-
+    "--module", default="networks.DDAFormer.DAEFormer",help="The module that you want to load as the network, e.g. networks.DAEFormer.DAEFormer"
+)  
 
 args = parser.parse_args()
 
@@ -90,15 +83,15 @@ if __name__ == "__main__":
     print("Using device:", device)
     print()
 
-    # Additional Info when using cuda
+
     if device.type == "cuda":
         print(torch.cuda.get_device_name(0))
         print("Memory Usage:")
         print("Allocated:", round(torch.cuda.memory_allocated(0) / 1024**3, 1), "GB")
         print("Cached:   ", round(torch.cuda.memory_reserved(0) / 1024**3, 1), "GB")
 
-    # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(map(str, range(args.n_gpu)))  # gai 2gpu 动态设置可见 GPU
+   
+    os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(map(str, range(args.n_gpu)))
 
     if not args.deterministic:
         cudnn.benchmark = True
@@ -130,7 +123,7 @@ if __name__ == "__main__":
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
 
-    net = transformer(num_classes=args.num_classes).cuda()  # gai
+    net = transformer(num_classes=args.num_classes).cuda() 
 
     trainer = {
         "Synapse": trainer_synapse,
