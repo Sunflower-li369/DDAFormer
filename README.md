@@ -1,5 +1,3 @@
-# DDAFormer
-
 # [Spatial differential meets channel differential: Differential attention inspired dual feature fusion Transformer for medical image segmentation]
 
 ## Updates
