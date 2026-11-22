@@ -1,10 +1,10 @@
-# DDAFormer
+<img width="1296" height="780" alt="image" src="https://github.com/user-attachments/assets/1395ea00-1b8c-4c66-b895-cf303740a388" /># DDAFormer
 
-# [DDAFomrer: Dual Differential Attention Transformer for Medical Image Segmentation]
+# [Spatial differential meets channel differential: Differential attention inspired dual feature fusion Transformer for medical image segmentation]
 
 ## Updates
 
-- 2025.7
+- 2026.11
 
 
 ### Datasets
